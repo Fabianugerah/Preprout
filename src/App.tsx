@@ -19,10 +19,8 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public */}
         <Route path="/login" element={<LoginPage />} />
 
-        {/* Protected + Layout */}
         <Route element={<ProtectedRoute />}>
           <Route element={<LayoutWrapper />}>
             <Route path="/dashboard" element={<DashboardPage />} />
@@ -33,7 +31,6 @@ export default function App() {
           </Route>
         </Route>
 
-        {/* Fallback */}
         <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </BrowserRouter>

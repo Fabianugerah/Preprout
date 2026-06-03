@@ -15,7 +15,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           fontFamily: "'Plus Jakarta Sans', sans-serif",
           fontSize: '14px',
           borderRadius: '10px',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
         },
         success: {
           iconTheme: { primary: '#4f46e5', secondary: '#fff' },
