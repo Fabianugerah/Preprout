@@ -73,15 +73,6 @@ npm run build
 
 ---
 
-## Test Credentials
-
-```
-Username: vedant-admin
-Password: vedant123
-```
-
----
-
 ## Application Flow
 
 ```
@@ -89,15 +80,3 @@ Login → Dashboard → Create Test → Add Questions → Preview & Publish
   1         2           3              4                 5
 ```
 
----
-
-## API Base URL
-
-```
-https://admin-moderator-backend-staging.up.railway.app/api
-```
-
-All protected routes require:
-```
-Authorization: Bearer <jwt_token>
-```
