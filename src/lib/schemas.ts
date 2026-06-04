@@ -6,12 +6,12 @@ export const loginSchema = z.object({
 })
 
 export const testSchema = z.object({
-  name:        z.string().min(1, 'Test name is required').max(150),
-  type:        z.string().min(1, 'Test type is required'),
-  subject:     z.string().min(1, 'Subject is required'),
-  topics:      z.array(z.string()).min(1, 'Select at least one topic'),
-  sub_topics:  z.array(z.string()).optional().default([]),
-  difficulty:  z.string().min(1, 'Difficulty is required'),
+  name:            z.string().min(1, 'Test name is required').max(150),
+  type:            z.string().min(1, 'Test type is required'),
+  subject:         z.string().min(1, 'Subject is required'),
+  topics:          z.array(z.string()).min(1, 'Select at least one topic'),
+  sub_topics:      z.array(z.string()).default([]),
+  difficulty:      z.string().min(1, 'Difficulty is required'),
   correct_marks:   z.coerce.number().min(0),
   wrong_marks:     z.coerce.number(),
   unattempt_marks: z.coerce.number(),
@@ -26,14 +26,12 @@ export const questionSchema = z.object({
   option2:        z.string().min(1, 'Option 2 is required'),
   option3:        z.string().min(1, 'Option 3 is required'),
   option4:        z.string().min(1, 'Option 4 is required'),
-  correct_option: z.enum(['option1', 'option2', 'option3', 'option4'], {
-    required_error: 'Select the correct option',
-  }),
-  explanation:  z.string().optional(),
-  difficulty:   z.string().optional(),
-  topic_id:     z.string().optional(),
-  sub_topic_id: z.string().optional(),
-  media_url:    z.string().url('Must be a valid URL').optional().or(z.literal('')),
+  correct_option: z.enum(['option1', 'option2', 'option3', 'option4']),
+  explanation:    z.string().optional(),
+  difficulty:     z.string().optional(),
+  topic_id:       z.string().optional(),
+  sub_topic_id:   z.string().optional(),
+  media_url:      z.string().optional(),
 })
 
 export type LoginSchema    = z.infer<typeof loginSchema>

@@ -9,4 +9,13 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://admin-moderator-backend-staging.up.railway.app',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 })

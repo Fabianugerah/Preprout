@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.bg-primary {
+  background-color: #F7FBFF;
+}
+
 @layer base {
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
