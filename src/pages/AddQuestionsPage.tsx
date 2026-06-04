@@ -35,10 +35,11 @@ export default function AddQuestionsPage() {
     option4: '',
     correct_option: 'option1',
     explanation: '',
-    difficulty: '',
+    difficulty: 'easy',
     topic_id: '',
     sub_topic_id: '',
     test_id: id,
+    media_url: '',
   })
 
   useEffect(() => {
@@ -94,16 +95,22 @@ export default function AddQuestionsPage() {
   const handleNext = async () => {
     if (!id) return
     const hasEmpty = localQuestions.some(
-      q => !q.question || !q.option1 || !q.option2 || !q.option3 || !q.option4
+      q => !q.question || !q.option1 || !q.option2 || !q.option3 || !q.option4 || !q.difficulty
     )
     if (hasEmpty) {
-      toast.error('Please fill all question fields')
+      toast.error('Please fill all required fields (Question, Options, and Difficulty)')
       return
     }
     setIsPublishing(true)
     try {
       await questionsApi.bulkCreate({
-        questions: localQuestions.map(q => ({ ...q, type: 'mcq', test_id: id! })),
+        questions: localQuestions.map(q => ({ 
+          ...q, 
+          type: 'mcq', 
+          test_id: id!,
+          media_url: q.media_url || '',
+          explanation: q.explanation || '',
+        })),
       })
       await testsApi.update(id, { total_questions: localQuestions.length })
       setQuestions(localQuestions)
@@ -120,6 +127,17 @@ export default function AddQuestionsPage() {
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Navbar */}
       <PageHeader
+        breadcrumb={
+          <div className="flex items-center gap-2 text-sm text-slate-500">
+            <span className="hover:text-primary-600 cursor-pointer" onClick={() => navigate('/dashboard')}>
+              Test Creation
+            </span>
+            <span>/</span>
+            <span className="hover:text-primary-600 cursor-pointer">Create Test</span>
+            <span>/</span>
+            <span className="text-slate-800 font-medium capitalize">{test?.type ?? 'Chapter Wise'}</span>
+          </div>
+        }
         rightContent={
           <button
             onClick={handleNext}

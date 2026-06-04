@@ -10,6 +10,7 @@ import { useTestCreationStore } from '@/store'
 import { testSchema, type TestSchema } from '@/lib/schemas'
 import { getErrorMessage } from '@/utils'
 import type { Subject, Topic, SubTopic } from '@/types'
+import PageHeader from '@/components/layout/PageHeader'
 
 const TEST_TYPES = ['Chapter Wise', 'PYQ', 'Mock Test']
 const TYPE_VALUES: Record<string, string> = {
@@ -74,6 +75,7 @@ export default function CreateTestPage() {
     formState: { errors },
   } = useForm<TestSchema>({
     resolver: zodResolver(testSchema),
+    mode: 'onChange',
     defaultValues: {
       name: '',
       type: 'practice',
@@ -84,9 +86,9 @@ export default function CreateTestPage() {
       correct_marks: 5,
       wrong_marks: -1,
       unattempt_marks: 0,
-      total_time: 0,
+      total_time: 60,
       total_marks: 0,
-      total_questions: 0,
+      total_questions: 1,
     },
   })
 
@@ -179,29 +181,19 @@ export default function CreateTestPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── Header ── */}
-      <div className="border-b border-slate-200 px-8 py-3 flex items-center justify-between bg-white">
-        <div /> {/* spacer */}
-        <div className="flex items-center gap-4">
-          <div className="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center relative cursor-pointer hover:bg-slate-50">
-            <Bell size={17} className="text-slate-500" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-emerald-500 rounded-full" />
+      <PageHeader
+        breadcrumb={
+          <div className="flex items-center gap-2 text-sm text-slate-500">
+            <span className="hover:text-primary-600 cursor-pointer" onClick={() => navigate('/dashboard')}>
+              Test Creation
+            </span>
+            <span>/</span>
+            <span className="hover:text-primary-600 cursor-pointer">Create Test</span>
+            <span>/</span>
+            <span className="text-slate-800 font-medium">{activeTab}</span>
           </div>
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-full bg-primary-100 flex items-center justify-center">
-              <span className="text-sm font-bold text-primary-700">
-                {(user?.name ?? user?.email ?? 'A').toString().charAt(0).toUpperCase()}
-              </span>
-            </div>
-            <div>
-              <p className="text-sm font-semibold text-slate-800 leading-tight">
-                {user?.name ?? user?.email ?? 'Admin'}
-              </p>
-              <p className="text-xs text-slate-400">Admin</p>
-            </div>
-            <ChevronDown size={14} className="text-slate-400" />
-          </div>
-        </div>
-      </div>
+        }
+      />
 
       <div className="px-8 py-6">
         {/* ── Breadcrumb ── */}
@@ -228,11 +220,10 @@ export default function CreateTestPage() {
                 setActiveTab(tab)
                 setValue('type', TYPE_VALUES[tab])
               }}
-              className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${
-                activeTab === tab
+              className={`px-5 py-2 rounded-lg text-sm font-medium transition-all ${activeTab === tab
                   ? 'bg-white text-primary-600 font-semibold shadow-sm border border-slate-200'
                   : 'text-slate-500 hover:text-slate-700'
-              }`}
+                }`}
             >
               {tab}
             </button>
@@ -389,11 +380,10 @@ export default function CreateTestPage() {
                       >
                         <div
                           onClick={() => field.onChange(level)}
-                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center cursor-pointer transition-all ${
-                            field.value === level
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center cursor-pointer transition-all ${field.value === level
                               ? 'border-primary-600'
                               : 'border-slate-300'
-                          }`}
+                            }`}
                         >
                           {field.value === level && (
                             <div className="w-2.5 h-2.5 rounded-full bg-primary-600" />

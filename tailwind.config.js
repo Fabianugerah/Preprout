@@ -6,6 +6,17 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        'xs': '375px',
+        'sm': '640px',
+        'md': '768px',
+        'lg': '1024px',
+        'xl': '1280px',
+        '2xl': '1440px',
+      },
+      maxWidth: {
+        'screen-2xl': '1440px',
+      },
       colors: {
         primary: {
           50:  '#eef2ff',
@@ -33,10 +44,6 @@ export default {
         card: '0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06)',
         'card-hover': '0 4px 12px 0 rgb(0 0 0 / 0.10)',
       },
-      borderRadius: {
-        xl: '0.875rem',
-        '2xl': '1.25rem',
-      }
     },
   },
   plugins: [],
