@@ -75,7 +75,6 @@ export default function CreateTestPage() {
     formState: { errors },
   } = useForm<TestSchema>({
     resolver: zodResolver(testSchema),
-    mode: 'onChange',
     defaultValues: {
       name: '',
       type: 'practice',
@@ -86,9 +85,9 @@ export default function CreateTestPage() {
       correct_marks: 5,
       wrong_marks: -1,
       unattempt_marks: 0,
-      total_time: 60,
+      total_time: 0,
       total_marks: 0,
-      total_questions: 1,
+      total_questions: 0,
     },
   })
 

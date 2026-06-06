@@ -22,7 +22,6 @@ export default function PageHeader({ rightContent }: PageHeaderProps) {
     setDropdownOpen(false)
   }
 
-  // Close on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -33,58 +32,68 @@ export default function PageHeader({ rightContent }: PageHeaderProps) {
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  const displayName = (user?.name ?? user?.email ?? 'Admin').toString()
-  const initial = displayName.charAt(0).toUpperCase()
+  const displayName = (user?.name ?? user?.email ?? 'Alex Wando').toString()
 
   return (
-    <div className="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between shrink-0">
+    <div className="bg-white border-b border-slate-100 h-20 px-8 flex items-center justify-between shrink-0">
+      {/* Sisi Kiri (Kosong karena Breadcrumb ditaruh di dalam body halaman) */}
       <div />
-      <div className="flex items-center gap-4">
-        {/* Bell */}
-        <button className="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center relative hover:bg-slate-50 transition-all">
-          <Bell size={16} className="text-slate-500" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-emerald-500 rounded-full" />
+
+      {/* Sisi Kanan (Aksi & Profil) */}
+      <div className="flex items-center gap-5">
+        {/* Bell Notification Button */}
+        <button className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center relative hover:bg-slate-50 transition-all shadow-sm shadow-slate-100/50">
+          <Bell size={18} className="text-slate-600" />
+          <span className="absolute top-2 right-2.5 w-2 h-2 bg-[#22C55E] rounded-full ring-2 ring-white" />
         </button>
 
-        {/* Profile dropdown */}
+        {/* Profile Dropdown Trigger */}
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen((v) => !v)}
-            className="flex items-center gap-2 hover:bg-slate-50 rounded-xl px-2 py-1.5 transition-all"
+            className="flex items-center gap-3 hover:bg-slate-50/80 rounded-xl py-1 px-1.5 transition-all text-left"
           >
-            {/* Avatar */}
-            <div className="w-9 h-9 rounded-full bg-primary-100 flex items-center justify-center shrink-0 overflow-hidden">
+            {/* Avatar container */}
+            <div className="w-10 h-10 rounded-full bg-[#FFEDD5] flex items-center justify-center shrink-0 overflow-hidden border border-orange-100">
               <img
-                src="/assets/avatar.png"
+                src="https://ui-avatars.com/api/?name=Alex+Wando&background=FFEDD5&color=C2410C"
                 alt={displayName}
                 className="w-full h-full object-cover"
                 onError={(e) => {
+                  // Fallback jika avatar gagal dimuat
                   const t = e.target as HTMLImageElement
-                  t.style.display = 'none'
-                  t.nextElementSibling?.classList.remove('hidden')
+                  t.src = "/assets/avatar.png"
                 }}
               />
-              <span className="hidden text-sm font-bold text-primary-700">{initial}</span>
             </div>
-            <div className="text-left hidden sm:block">
-              <p className="text-sm font-semibold text-slate-800 leading-tight">{displayName}</p>
-              <p className="text-xs text-slate-400">Admin</p>
+
+            {/* Nama & Role */}
+            <div className="hidden sm:flex flex-col justify-center">
+              <p className="text-sm font-bold text-slate-800 leading-none tracking-tight">
+                {displayName}
+              </p>
+              <p className="text-[11px] font-medium text-slate-400 mt-1 leading-none">
+                Admin
+              </p>
             </div>
+
             <ChevronDown
-              size={14}
-              className={`text-slate-400 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
+              size={15}
+              className={`text-slate-400 ml-1 transition-transform duration-200 ${
+                dropdownOpen ? 'rotate-180 text-slate-600' : ''
+              }`}
             />
           </button>
 
-          {/* Dropdown menu */}
+          {/* Dropdown Menu Overlay */}
           {dropdownOpen && (
-            <div className="absolute right-0 top-full mt-1.5 w-48 bg-white rounded-xl border border-slate-200 shadow-lg py-1 z-50">
+            <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl border border-slate-200 shadow-xl py-1 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
               <div className="px-4 py-2.5 border-b border-slate-100">
-                <p className="text-xs font-semibold text-slate-700 truncate">{displayName}</p>
-                <p className="text-xs text-slate-400">Admin</p>
+                <p className="text-xs font-bold text-slate-700 truncate">{displayName}</p>
+                <p className="text-[10px] text-slate-400 mt-0.5">Admin</p>
               </div>
               <button
-                onClick={() => { }}
+                onClick={() => {}}
                 className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-slate-600 hover:bg-slate-50 transition-all"
               >
                 <User size={14} className="text-slate-400" />
@@ -92,7 +101,7 @@ export default function PageHeader({ rightContent }: PageHeaderProps) {
               </button>
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-all"
+                className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-medium text-red-500 hover:bg-red-50 transition-all"
               >
                 <LogOut size={14} />
                 Logout
@@ -101,7 +110,7 @@ export default function PageHeader({ rightContent }: PageHeaderProps) {
           )}
         </div>
 
-        {/* Optional right slot (e.g. Publish button) */}
+        {/* Jika ada tombol aksi tambahan di sebelah kanan profil */}
         {rightContent}
       </div>
     </div>
